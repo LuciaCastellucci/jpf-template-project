@@ -1,8 +1,8 @@
-package pcd.ass01sol01.simtrafficexamples;
+package ass01.jpf.simtrafficexamples;
 
-import pcd.ass01sol01.simengineseq.AbstractAgent;
-import pcd.ass01sol01.simengineseq.AbstractEnvironment;
-import pcd.ass01sol01.simengineseq.SimulationListener;
+import ass01.jpf.simengineseq.AbstractAgent;
+import ass01.jpf.simengineseq.AbstractEnvironment;
+import ass01.jpf.simengineseq.SimulationListener;
 
 import java.util.List;
 

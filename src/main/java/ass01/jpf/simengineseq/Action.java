@@ -1,4 +1,4 @@
-package pcd.ass01sol01.simengineseq;
+package ass01.jpf.simengineseq;
 
 /**
  * Base type for defining actions to be executed on the environment

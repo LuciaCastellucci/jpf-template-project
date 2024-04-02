@@ -1,9 +1,9 @@
-package pcd.ass01sol01.simtrafficexamples;
+package ass01.jpf.simtrafficexamples;
 
-import pcd.ass01sol01.simengineseq.AbstractAgent;
-import pcd.ass01sol01.simengineseq.AbstractEnvironment;
-import pcd.ass01sol01.simengineseq.SimulationListener;
-import pcd.ass01sol01.simtrafficbase.CarAgent;
+import ass01.jpf.simengineseq.AbstractAgent;
+import ass01.jpf.simengineseq.AbstractEnvironment;
+import ass01.jpf.simengineseq.SimulationListener;
+import ass01.jpf.simtrafficbase.CarAgent;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class StatisticsListener implements SimulationListener {
 		
 		maxSpeed = -1;
 		minSpeed = Double.MAX_VALUE;
-		for (var agent: agents) {
+		for (AbstractAgent agent: agents) {
 			CarAgent car = (CarAgent) agent;
 			double currSpeed = car.getCurrentSpeed();
 			avSpeed += currSpeed;			

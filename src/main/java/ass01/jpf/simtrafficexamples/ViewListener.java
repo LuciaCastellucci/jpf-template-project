@@ -1,4 +1,4 @@
-package pcd.ass01sol01.simtrafficexamples;
+package ass01.jpf.simtrafficexamples;
 
 public interface ViewListener {
 

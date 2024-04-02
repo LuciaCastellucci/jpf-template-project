@@ -1,6 +1,6 @@
-package pcd.ass01sol01.simtrafficbase;
+package ass01.jpf.simtrafficbase;
 
-import pcd.ass01sol01.simengineseq.Percept;
+import ass01.jpf.simengineseq.Percept;
 
 import java.util.Optional;
 
@@ -13,4 +13,38 @@ import java.util.Optional;
  * - nearest semaphore, if presente (distance)
  * 
  */
-public record CarPercept(double roadPos, Optional<CarAgentInfo> nearestCarInFront, Optional<TrafficLightInfo> nearestSem) implements Percept { }
+public class CarPercept implements Percept {
+    double roadPos;
+    Optional<CarAgentInfo> nearestCarInFront;
+    Optional<TrafficLightInfo> nearestSem;
+
+    public CarPercept (double roadPos, Optional<CarAgentInfo> nearestCarInFront, Optional<TrafficLightInfo> nearestSem) {
+        this.roadPos = roadPos;
+        this.nearestCarInFront = nearestCarInFront;
+        this.nearestSem = nearestSem;
+    }
+
+    public double getRoadPos() {
+        return roadPos;
+    }
+
+    public void setRoadPos(double roadPos) {
+        this.roadPos = roadPos;
+    }
+
+    public Optional<CarAgentInfo> getNearestCarInFront() {
+        return nearestCarInFront;
+    }
+
+    public void setNearestCarInFront(Optional<CarAgentInfo> nearestCarInFront) {
+        this.nearestCarInFront = nearestCarInFront;
+    }
+
+    public Optional<TrafficLightInfo> getNearestSem() {
+        return nearestSem;
+    }
+
+    public void setNearestSem(Optional<TrafficLightInfo> nearestSem) {
+        this.nearestSem = nearestSem;
+    }
+}

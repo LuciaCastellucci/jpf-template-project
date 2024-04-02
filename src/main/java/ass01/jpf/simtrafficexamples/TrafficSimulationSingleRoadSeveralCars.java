@@ -1,7 +1,7 @@
-package pcd.ass01sol01.simtrafficexamples;
+package ass01.jpf.simtrafficexamples;
 
-import pcd.ass01sol01.simengineseq.AbstractSimulation;
-import pcd.ass01sol01.simtrafficbase.*;
+import ass01.jpf.simengineseq.AbstractSimulation;
+import ass01.jpf.simtrafficbase.*;
 
 /**
  * 

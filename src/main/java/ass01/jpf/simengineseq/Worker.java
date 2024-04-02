@@ -1,9 +1,8 @@
-package pcd.ass01sol01.simengineseq;
+package ass01.jpf.simengineseq;
 
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.Semaphore;
 
 public class Worker extends Thread {
 

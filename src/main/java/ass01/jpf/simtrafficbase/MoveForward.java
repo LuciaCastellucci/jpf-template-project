@@ -1,8 +1,22 @@
-package pcd.ass01sol01.simtrafficbase;
+package ass01.jpf.simtrafficbase;
 
-import pcd.ass01sol01.simengineseq.Action;
+import ass01.jpf.simengineseq.Action;
 
 /**
  * Car agent move forward action
  */
-public record MoveForward(double distance) implements Action {}
+public class MoveForward implements Action {
+
+    double distance;
+    public MoveForward(double distance) {
+        this.distance = distance;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+}

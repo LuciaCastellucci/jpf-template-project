@@ -1,14 +1,37 @@
-package pcd.ass01sol01.simtrafficbase;
+package ass01.jpf.simtrafficbase;
 
 /**
  *
  * P2d -- modelling a point in a 2D space
  * 
  */
-public record P2d(double x, double y) {
+public class P2d {
+    double x;
+    double y;
+
+    public P2d(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
 
     public P2d sum(V2d v){
-        return new P2d(x+v.x(),y+v.y());
+        return new P2d(x+v.getX(),y+v.getY());
     }
 
     public V2d sub(P2d v){

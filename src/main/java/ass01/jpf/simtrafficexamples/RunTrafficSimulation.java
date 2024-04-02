@@ -1,4 +1,4 @@
-package pcd.ass01sol01.simtrafficexamples;
+package ass01.jpf.simtrafficexamples;
 
 /**
  * 
@@ -12,7 +12,7 @@ public class RunTrafficSimulation {
 		Flag stopFlag = new Flag();
 		Controller controller = new Controller(synch, stopFlag);
 
-		var simulation = new TrafficSimulationSingleRoadTwoCars(stopFlag, synch);
+		TrafficSimulationSingleRoadTwoCars simulation = new TrafficSimulationSingleRoadTwoCars(stopFlag, synch);
 		// var simulation = new TrafficSimulationSingleRoadSeveralCars(stopFlag, synch);
 		// var simulation = new TrafficSimulationSingleRoadWithTrafficLightTwoCars(stopFlag, synch);
 		//var simulation = new TrafficSimulationWithCrossRoads(stopFlag, synch);

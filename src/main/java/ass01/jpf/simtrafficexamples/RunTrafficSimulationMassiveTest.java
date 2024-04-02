@@ -1,4 +1,4 @@
-package pcd.ass01sol01.simtrafficexamples;
+package ass01.jpf.simtrafficexamples;
 
 public class RunTrafficSimulationMassiveTest {
 
@@ -9,7 +9,7 @@ public class RunTrafficSimulationMassiveTest {
 
 		StartSynch synch = new StartSynch();
 		Flag stopFlag = new Flag();
-		var simulation = new TrafficSimulationSingleRoadMassiveNumberOfCars(stopFlag, synch, numCars);
+		TrafficSimulationSingleRoadMassiveNumberOfCars simulation = new TrafficSimulationSingleRoadMassiveNumberOfCars(stopFlag, synch, numCars);
 		simulation.setup();
 		
 		log("Running the simulation: " + numCars + " cars, for " + nSteps + " steps ...");

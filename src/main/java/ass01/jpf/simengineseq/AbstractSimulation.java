@@ -1,14 +1,11 @@
-package pcd.ass01sol01.simengineseq;
+package ass01.jpf.simengineseq;
+
+import ass01.jpf.simtrafficexamples.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
-import pcd.ass01sol01.simtrafficexamples.*;
 
 /**
  * Base class for defining concrete simulations
@@ -85,7 +82,7 @@ public abstract class AbstractSimulation {
 			int t = t0;
 
 			env.init();
-			for (var a: agents) {
+			for (AbstractAgent a: agents) {
 				a.init(env);
 			}
 
@@ -186,19 +183,19 @@ public abstract class AbstractSimulation {
 	}
 	
 	private void notifyReset(int t0, List<AbstractAgent> agents, AbstractEnvironment env) {
-		for (var l: listeners) {
+		for (SimulationListener l: listeners) {
 			l.notifyInit(t0, agents, env);
 		}
 	}
 
 	private void notifyNewStep(int t, List<AbstractAgent> agents, AbstractEnvironment env) {
-		for (var l: listeners) {
+		for (SimulationListener l: listeners) {
 			l.notifyStepDone(t, agents, env);
 		}
 	}
 
 	private void notifyStateChanged(String message) {
-		for (var l: listeners) {
+		for (SimulationListener l: listeners) {
 			l.notifyStateChanged(message);
 		}
 	}

@@ -1,14 +1,36 @@
-package pcd.ass01sol01.simtrafficbase;
+package ass01.jpf.simtrafficbase;
 
 /**
  *
  * V2d represents a vector in a 2d space
  * 
  */
-public record V2d(double x, double y) {
+public class V2d {
+    double x;
+    double y;
+    public V2d(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
 
     public static V2d makeV2d(P2d from, P2d to) {
-    	return new V2d(to.x() - from.x(), to.y() - from.y());
+    	return new V2d(to.getX() - from.getX(), to.getY() - from.getX());
     }
 
     public V2d sum(V2d v){

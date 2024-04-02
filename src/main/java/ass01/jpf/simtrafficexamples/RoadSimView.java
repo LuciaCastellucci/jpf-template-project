@@ -1,15 +1,15 @@
-package pcd.ass01sol01.simtrafficexamples;
+package ass01.jpf.simtrafficexamples;
 
-import pcd.ass01sol01.simengineseq.AbstractAgent;
-import pcd.ass01sol01.simengineseq.AbstractEnvironment;
-import pcd.ass01sol01.simtrafficbase.*;
+import ass01.jpf.simengineseq.AbstractAgent;
+import ass01.jpf.simengineseq.AbstractEnvironment;
+import ass01.jpf.simtrafficbase.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 public class RoadSimView extends JFrame implements ActionListener {
 
@@ -71,7 +71,7 @@ public class RoadSimView extends JFrame implements ActionListener {
 	}
 
 	public void notifyStepDone(int t, List<AbstractAgent> agents, AbstractEnvironment env) {
-		var e = ((RoadsEnv) env);
+		RoadsEnv e = ((RoadsEnv) env);
 		panel.update(e.getRoads(), e.getAgentInfo(), e.getTrafficLights());
 	}
 
@@ -123,13 +123,13 @@ public class RoadSimView extends JFrame implements ActionListener {
 			g2.clearRect(0,0,this.getWidth(),this.getHeight());
 			
 			if (roads != null) {
-				for (var r: roads) {
-					g2.drawLine((int)r.getFrom().x(), (int)r.getFrom().y(), (int)r.getTo().x(), (int)r.getTo().y());
+				for (Road r: roads) {
+					g2.drawLine((int)r.getFrom().getX(), (int)r.getFrom().getY(), (int)r.getTo().getX(), (int)r.getTo().getY());
 				}
 			}
 			
 			if (sems != null) {
-				for (var s: sems) {
+				for (TrafficLight s: sems) {
 					if (s.isGreen()) {
 						g.setColor(new Color(0, 255, 0, 255));
 					} else if (s.isRed()) {
@@ -137,18 +137,18 @@ public class RoadSimView extends JFrame implements ActionListener {
 					} else {
 						g.setColor(new Color(255, 255, 0, 255));
 					}
-					g2.fillRect((int)(s.getPos().x()-5), (int)(s.getPos().y()-5), 10, 10);
+					g2.fillRect((int)(s.getPos().getX()-5), (int)(s.getPos().getY()-5), 10, 10);
 				}
 			}
 			
 			g.setColor(new Color(0, 0, 0, 255));
 
 			if (cars != null) {
-				for (var c: cars) {
+				for (CarAgentInfo c: cars) {
 					double pos = c.getPos();
 					Road r = c.getRoad();
 					V2d dir = V2d.makeV2d(r.getFrom(), r.getTo()).getNormalized().mul(pos);
-					g2.drawOval((int)(r.getFrom().x() + dir.x() - CAR_DRAW_SIZE/2), (int)(r.getFrom().y() + dir.y() - CAR_DRAW_SIZE/2), CAR_DRAW_SIZE , CAR_DRAW_SIZE);
+					g2.drawOval((int)(r.getFrom().getX() + dir.getX() - CAR_DRAW_SIZE/2), (int)(r.getFrom().getY() + dir.getY() - CAR_DRAW_SIZE/2), CAR_DRAW_SIZE , CAR_DRAW_SIZE);
 				}
 			}
   	   }
