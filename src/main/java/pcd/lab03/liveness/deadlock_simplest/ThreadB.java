@@ -11,7 +11,8 @@ public class ThreadB extends BaseAgent {
 	public void run(){
 		while (true){
 			// waitAbit();
-			res.leftRight();
+			//res.leftRight();
+			res.rightLeft();
 		}
 	}	
 }

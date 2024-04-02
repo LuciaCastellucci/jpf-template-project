@@ -1,5 +1,7 @@
 package pcd.lab03.liveness.accounts_exercise;
 
+import java.util.concurrent.locks.Lock;
+
 public class AccountManager {
 	
 	private final Account[] accounts;
@@ -10,8 +12,9 @@ public class AccountManager {
 			accounts[i] = new Account(amount);
 		}
 	}
-	
-	public void transferMoney(int from,	int to, int amount) throws InsufficientBalanceException {
+
+	/*
+	public void transferMoney(int from, int to, int amount) throws InsufficientBalanceException {
 		synchronized (accounts[from]) {
 			synchronized (accounts[to]) {
 				if (accounts[from].getBalance() < amount)
@@ -19,6 +22,31 @@ public class AccountManager {
 				accounts[from].debit(amount);
 				accounts[to].credit(amount);
 			}
+		}
+	}
+	 */
+
+	public void transferMoney(int from, int to, int amount) throws InsufficientBalanceException {
+		Account fromAccount = accounts[from];
+		Account toAccount = accounts[to];
+		Lock fromLock = fromAccount.getLock();
+		Lock toLock = toAccount.getLock();
+		try {
+			if (from > to) {
+				toLock.lock();
+				fromLock.lock();
+			} else {
+				fromLock.lock();
+				toLock.lock();
+			}
+			if (fromAccount.getBalance() < amount) {
+				throw new InsufficientBalanceException();
+			}
+			fromAccount.debit(amount);
+			toAccount.credit(amount);
+		} finally {
+			fromLock.unlock();
+			toLock.unlock();
 		}
 	}
 	
