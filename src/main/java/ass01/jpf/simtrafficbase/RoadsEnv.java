@@ -9,48 +9,47 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
 public class RoadsEnv extends AbstractEnvironment {
-		
+
 	private static final int MIN_DIST_ALLOWED = 5;
 	private static final int CAR_DETECTION_RANGE = 30;
 	private static final int SEM_DETECTION_RANGE = 30;
-	
+
 	/* list of roads */
 	private List<Road> roads;
 
 	/* traffic lights */
 	private List<TrafficLight> trafficLights;
-	
-	/* cars situated in the environment */	
+
+	/* cars situated in the environment */
 	private HashMap<String, CarAgentInfo> registeredCars;
 
-	private Lock mutex;
+	private HashMap<String, Lock> locks;
 
 	public RoadsEnv() {
 		super("traffic-env");
-		registeredCars = new HashMap<>();	
+		registeredCars = new HashMap<>();
 		trafficLights = new ArrayList<>();
 		roads = new ArrayList<>();
-		mutex =  new ReentrantLock();
+		locks =  new HashMap<>();
 	}
-	
+
 	@Override
 	public void init() {
 		for (TrafficLight tl: trafficLights) {
 			tl.init();
 		}
 	}
-	
+
 	@Override
 	public void step(int dt) {
 		for (TrafficLight tl: trafficLights) {
 			tl.step(dt);
 		}
 	}
-	
+
 	public void registerNewCar(CarAgent car, Road road, double pos) {
 		registeredCars.put(car.getId(), new CarAgentInfo(car, road, pos));
 	}
@@ -69,22 +68,22 @@ public class RoadsEnv extends AbstractEnvironment {
 
 	@Override
 	public Percept getCurrentPercepts(String agentId) {
-		//try {
-			//mutex.lock();
+		try {
+			locks.get(agentId).lock();
 			CarAgentInfo carInfo = registeredCars.get(agentId);
 			double pos = carInfo.getPos();
 			Road road = carInfo.getRoad();
 			Optional<CarAgentInfo> nearestCar = getNearestCarInFront(road,pos, CAR_DETECTION_RANGE);
 			Optional<TrafficLightInfo> nearestSem = getNearestSemaphoreInFront(road,pos, SEM_DETECTION_RANGE);
 			return new CarPercept(pos, nearestCar, nearestSem);
-		//}
-		//finally {
-			//mutex.unlock();
-		//}
+		}
+		finally {
+			locks.get(agentId).unlock();
+		}
 	}
 
 	private Optional<CarAgentInfo> getNearestCarInFront(Road road, double carPos, double range){
-		return 
+		return
 				registeredCars
 				.entrySet()
 				.stream()
@@ -98,18 +97,18 @@ public class RoadsEnv extends AbstractEnvironment {
 	}
 
 	private Optional<TrafficLightInfo> getNearestSemaphoreInFront(Road road, double carPos, double range){
-		return 
+		return
 				road.getTrafficLights()
 				.stream()
 				.filter((TrafficLightInfo tl) -> tl.getRoadPos() > carPos)
 				.min((c1, c2) -> (int) Math.round(c1.getRoadPos() - c2.getRoadPos()));
 	}
-	
-	
+
+
 	@Override
 	public void doAction(String agentId, Action act) {
 		try {
-			mutex.lock();
+			locks.get(agentId).lock();
 			if (act instanceof Action) {
 				MoveForward mv = (MoveForward) act;
 				CarAgentInfo info = registeredCars.get(agentId);
@@ -131,11 +130,11 @@ public class RoadsEnv extends AbstractEnvironment {
 
 			}
 		} finally {
-			mutex.unlock();
+			locks.get(agentId).unlock();
 		}
 	}
-	
-	
+
+
 	public List<CarAgentInfo> getAgentInfo(){
 		return this.registeredCars.entrySet().stream().map(el -> el.getValue()).collect(Collectors.toList());
 	}
@@ -143,7 +142,7 @@ public class RoadsEnv extends AbstractEnvironment {
 	public List<Road> getRoads(){
 		return roads;
 	}
-	
+
 	public List<TrafficLight> getTrafficLights(){
 		return trafficLights;
 	}
